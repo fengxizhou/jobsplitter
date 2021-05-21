@@ -22,7 +22,7 @@ func main() {
 	logger.SetPrefix("pbslog: ")
 	logger.SetFlags(log.Ldate | log.Ltime)
 	if *logFile != "" {
-		var err
+		var err error
 		logFH, err = os.OpenFile(*logFile, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 		if err != nil {
 			logger.Fatal(err)
@@ -38,7 +38,7 @@ func main() {
 	flag.Parse()
 
 	filenamePattern := `\d{8}`
-	statesStorePath := filepath.Join(*outDirFlag, "states.json")
+	statesStorePath := filepath.Join(filepath.Dir(*outDirFlag), "states.json")
 	lfs := pbslog.NewLogFileStates(*inDirFlag, filenamePattern, statesStorePath)
 
 	var filters []pbslog.JobFilter
